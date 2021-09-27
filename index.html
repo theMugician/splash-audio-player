@@ -1,0 +1,17 @@
+<div class="splash-audio-player">
+	<audio class="splash-audio-player__audio" src="" preload="metadata" loop></audio>
+	<div class="splash-audio-player__play-icon"></div>
+	<input type="range" class="splash-audio-player__range-slider splash-audio-player__seek-slider" max="100" value="0">
+	<span class="splash-audio-player__current-time splash-audio-player__time">0:00</span>
+	<span class="splash-audio-player__time">&nbsp;/&nbsp;</span>
+	<span class="splash-audio-player__duration splash-audio-player__time">0:00</span>
+	<div class="splash-audio-player__mute-icon"></div>
+	<input type="range" class="splash-audio-player__volume-slider splash-audio-player__range-slider" max="100" value="100">
+</div>
+
+<script>
+	window.addEventListener('load', (event) => {
+		console.log('init')
+		splashAudioPlayer('.splash-audio-player')
+	})
+</script>
