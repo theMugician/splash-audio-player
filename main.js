@@ -2,9 +2,12 @@ class SplashAudioPlayer {
     constructor(player) {
         this.audioPlayer = typeof player === 'string' ? document.querySelector(player) : player
 
-        const audioElement = this.audioPlayer.innerHTML
+        this.audioElementHTML = this.audioPlayer.innerHTML
+        this.audioElement = this.audioPlayer.getElementsByTagName('audio')[0]
+        //console.log(typeof auEl)
+        console.log(typeof this.audioElement)
         this.audioPlayer.classList.add('splash-audio-player')
-        this.audioPlayer.innerHTML = SplashAudioPlayer.getTemplate() + audioElement
+        this.audioPlayer.innerHTML = SplashAudioPlayer.getTemplate() + this.audioElementHTML
     
         /** Implementation of the presentation of the audio player */
         //const audioPlayer = document.getElementById(selector)
@@ -23,66 +26,78 @@ class SplashAudioPlayer {
         this.muteState = 'unmute'
         this.raf = null
 
-        this.init
+        this.init()
     }
 
     emitEvents() {
         this.playIconContainer.addEventListener('click', () => {
-            if(playState === 'play') {
-                audioElement.play()
-                requestAnimationFrame(whilePlaying)
-                playState = 'pause'
+            if(this.playState === 'play') {
+                this.audioElement.play()
+                requestAnimationFrame(this.whilePlaying)
+                this.playState = 'pause'
             } else {
-                audioElement.pause()
-                cancelAnimationFrame(raf)
-                playState = 'play'
+                this.audioElement.pause()
+                cancelAnimationFrame(this.raf)
+                this.playState = 'play'
             }
         })
 
         this.muteIconContainer.addEventListener('click', () => {
             if(muteState === 'unmute') {
-                audioElement.muted = true
-                muteState = 'mute'
+                this.audioElement.muted = true
+                this.muteState = 'mute'
             } else {
-                audioElement.muted = false
-                muteState = 'unmute'
+                this.audioElement.muted = false
+                this.muteState = 'unmute'
             }
         })
 
         this.seekSlider.addEventListener('input', (e) => {
-            showRangeProgress(e.target)
+            this.showRangeProgress(e.target)
         })
         this.volumeSlider.addEventListener('input', (e) => {
-            showRangeProgress(e.target)
+            this.showRangeProgress(e.target)
         })
 
         this.seekSlider.addEventListener('input', () => {
-            currentTimeContainer.textContent = calculateTime(seekSlider.value)
-            if(!audioElement.paused) {
-                cancelAnimationFrame(raf)
+            this.currentTimeContainer.textContent = this.calculateTime(this.seekSlider.value)
+            if(!this.audioElement.paused) {
+                cancelAnimationFrame(this.raf)
             }
         })
     
         this.seekSlider.addEventListener('change', () => {
-            audioElement.currentTime = seekSlider.value
-            if(!audioElement.paused) {
-                requestAnimationFrame(whilePlaying)
+            this.audioElement.currentTime = this.seekSlider.value
+            if(!this.audioElement.paused) {
+                requestAnimationFrame(this.whilePlaying)
             }
         })
     
         this.volumeSlider.addEventListener('input', (e) => {
             const value = e.target.value
     
-            outputContainer.textContent = value
-            audioElement.volume = value / 100
+            //this.outputContainer.textContent = value
+            this.audioElement.volume = value / 100
         })
     }
     
+    static getTemplate() {
+        return `
+            <div class="splash-audio-player__play-icon"></div>
+            <input type="range" class="splash-audio-player__range-slider splash-audio-player__seek-slider" max="100" value="0">
+            <span class="splash-audio-player__current-time splash-audio-player__time">0:00</span>
+            <span class="splash-audio-player__time">&nbsp;/&nbsp;</span>
+            <span class="splash-audio-player__duration splash-audio-player__time">0:00</span>
+            <div class="splash-audio-player__mute-icon"></div>
+            <input type="range" class="splash-audio-player__volume-slider splash-audio-player__range-slider" max="100" value="100">
+        `
+    }
+
     /** Implementation of the functionality of the audio player */
 
     showRangeProgress = (rangeInput) => {
-        if(rangeInput === seekSlider) audioPlayerPlayerContainer.style.setProperty('--seek-before-width', rangeInput.value / rangeInput.max * 100 + '%')
-        else audioPlayerPlayerContainer.style.setProperty('--volume-before-width', rangeInput.value / rangeInput.max * 100 + '%')
+        if(rangeInput === this.seekSlider) this.audioPlayer.style.setProperty('--seek-before-width', rangeInput.value / rangeInput.max * 100 + '%')
+        else this.audioPlayer.style.setProperty('--volume-before-width', rangeInput.value / rangeInput.max * 100 + '%')
     }
 
     calculateTime = (secs) => {
@@ -93,29 +108,30 @@ class SplashAudioPlayer {
     }
 
     displayDuration = () => {
-        durationContainer.textContent = calculateTime(audioElement.duration)
+        this.durationContainer.textContent = this.calculateTime(this.audioElement.duration)
     }
 
     setSliderMax = () => {
-        seekSlider.max = Math.floor(audioElement.duration)
+        this.seekSlider.max = Math.floor(this.audioElement.duration)
     }
 
     whilePlaying = () => {
-        seekSlider.value = Math.floor(audioElement.currentTime)
-        currentTimeContainer.textContent = calculateTime(seekSlider.value)
-        audioPlayerPlayerContainer.style.setProperty('--seek-before-width', `${seekSlider.value / seekSlider.max * 100}%`)
-        raf = requestAnimationFrame(whilePlaying)
+        this.seekSlider.value = Math.floor(this.audioElement.currentTime)
+        this.currentTimeContainer.textContent = this.calculateTime(this.seekSlider.value)
+        this.audioPlayer.style.setProperty('--seek-before-width', `${this.seekSlider.value / this.seekSlider.max * 100}%`)
+        this.raf = requestAnimationFrame(this.whilePlaying)
     }
 
     init() {
-        emitEvents()
+        this.emitEvents()
+        console.log(this.audioElement)
         if (this.audioElement.readyState > 0) {
-            displayDuration()
-            setSliderMax()
+            this.displayDuration()
+            this.setSliderMax()
         } else {
-            audioElement.addEventListener('loadedmetadata', () => {
-                displayDuration()
-                setSliderMax()
+            this.audioElement.addEventListener('loadedmetadata', () => {
+                this.displayDuration()
+                this.setSliderMax()
             })
         }  
     }
