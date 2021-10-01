@@ -2,28 +2,26 @@
 
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  	<meta charset="utf-8">
 
-  <title>Splash Audio Player</title>
-  <meta name="description" content="Splash Audio Player">
-  <meta name="author" content="Greg Slonina | sevenoceans.agency">
-  <link rel="stylesheet" href="main.css">
+	<title>Splash Audio Player</title>
+	<meta name="description" content="Splash Audio Player | Vanilla javascript audio player">
+	<meta name="author" content="Greg Slonina | sevenoceans.agency">
+	<link rel="stylesheet" href="main.css">
 
 </head>
 
-<body class="body">
+<body>
 
-
-<div class="splash-audio-player">
-	<audio class="splash-audio-player__audio" src="alice-in-chains-would.mp3" preload="metadata" loop>
-	</audio>
-</div>
+	<div class="splash-audio-player">
+		<audio src="alice-in-chains-would.mp3" preload="metadata" loop>
+		</audio>
+	</div>
 
 <script src="main.js"></script>
 
 <script>
 	window.addEventListener('load', (event) => {
-		console.log('init')
 		new SplashAudioPlayer('.splash-audio-player')
 	})
 </script>

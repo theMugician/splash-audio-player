@@ -29,14 +29,14 @@
     --range-slider-thumb__height: 12px;
     --range-slider-thumb__margin: -4px 0 0 0;
     --range-slider-thumb__border-radius: 50%;
-    --volume-slider__width: 70%;
+    --volume-slider__width: 30%;
     --seek-slider-thumb__background-color: #fff;
     --seek-slider-thumb__width: 3px;
     --seek-slider-thumb__border-radius: 0;
     --seek-slider-thumb__margin: -6px 0 0 0;
     --seek-slider-thumb__height: 16px;
-    --seek-before-width: 0%;
-    --volume-before-width: 100%;
+    --seek-slider-before__width: 0%;
+    --volume-slider-before__width: 100%;
     --buffered-width: 0%;
 
     position: relative;
@@ -53,24 +53,24 @@
     padding-top: 40px;
     padding-bottom: 40px;
 }
-.splash-audio-player__play-icon, .splash-audio-player__mute-icon {
-    padding: 0;
-    border: 0;
-    background: transparent;
+.splash-audio-player__mute-button {  
     cursor: pointer;
     outline: none;
     width: 20px;
     height: 20px;
-    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.splash-audio-player__play-pause-button {  
+    cursor: pointer;
+    outline: none;
+    width: 16px;
+    height: 20px;
 }
 
-.splash-audio-player__play-icon {
+.splash-audio-player__play-pause-button {
     margin-right: 10px;
-    margin-left: 20px;
-    background-image: url(/wp-content/themes/altitude-pro/blocks/audio-player/audio-player-play.svg);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-position: center;
+    margin-left: 18px;
 }
 
 .splash-audio-player__time {
@@ -80,6 +80,7 @@
     margin: 0;
     margin-top: -1px;
     font-weight: 500;
+    font-family: sans-serif;
 }
 .splash-audio-player__time {
     color: #6A6A6D;
@@ -231,7 +232,7 @@
     background-color: var(--range-slider-thumb__background-color);
 }
 .splash-audio-player__seek-slider::before {
-    width: var(--seek-before-width);
+    width: var(--seek-slider-before__width);
 }
 .splash-audio-player__volume-slider {
     margin: 0;
@@ -248,5 +249,5 @@
     background: var(--range-slider-track__background-color);
 }
 .splash-audio-player__volume-slider::before {
-    width: var(--volume-before-width);
+    width: var(--volume-slider-before__width);
 }
