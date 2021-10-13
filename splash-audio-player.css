@@ -1,14 +1,4 @@
 .splash-audio-player {
-    --color-text: #14141A;
-    --color-text-gray: #B9B9BA;
-    --color-white: #fff;
-    --color-blue: #35C8FF;
-    --color-pink: #FF2E7E;
-    --color-purple: #AA33FF;
-    --color-green: #00EB81;
-}
-
-.splash-audio-player {
     --splash-audio-player__background-color: #2B2B31;
     --splash-audio-player__max-width: 540px;
     --splash-audio-player__border-radius: 20px;

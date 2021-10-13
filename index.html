@@ -7,25 +7,53 @@
 	<title>Splash Audio Player</title>
 	<meta name="description" content="Splash Audio Player | Vanilla javascript audio player">
 	<meta name="author" content="Greg Slonina | sevenoceans.agency">
-	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="splash-audio-player.css">
 
+	<style>
+		body, html {
+			margin: 0;
+			background-color: rgb(14, 14, 14);
+			height: 100%;
+		}
+	
+		.main {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+		}
+		
+		.main h1, .main a {
+			font-family: sans-serif;
+			color: #fff;
+			margin: 0;
+		}
+
+		.main a:hover, .main a:active {
+			color: #fff;
+		}
+
+	</style>
 </head>
 
 <body>
-
-	<div class="splash-audio-player">
-		<audio src="alice-in-chains-would.mp3" preload="metadata" loop>
-		</audio>
+	<div class="main">
+		<h1>Splash Audio Player</h1>
+		<div class="my-custom-audio-player">
+			<audio src="https://sevenoceans.agency/khruangbin-pelota.mp3" preload="metadata" loop>
+			</audio>
+		</div>
+		<a target="_blank" href="https://github.com/theMugician/splash-audio-player">View the Docs</a>
 	</div>
 
-<script src="main.js"></script>
+	<script src="splash-audio-player.js"></script>
 
-<script>
-	window.addEventListener('load', (event) => {
-		new SplashAudioPlayer('.splash-audio-player')
-	})
-</script>
-
+	<script>
+		window.addEventListener('load', (event) => {
+			new SplashAudioPlayer('.my-custom-audio-player')
+		})
+	</script>
 
 </body>
 </html>

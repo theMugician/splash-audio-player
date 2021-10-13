@@ -94,7 +94,7 @@ class SplashAudioPlayer {
             <input type="range" class="splash-audio-player__volume-slider splash-audio-player__range-slider" max="100" value="100">
         `
     }
-//            this.speaker.attributes.d.value = 'M0 7.667v8h5.333L12 22.333V1L5.333 7.667'
+
     /** Implementation of the functionality of the audio player */
 
     showRangeProgress = (rangeInput) => {
@@ -126,7 +126,6 @@ class SplashAudioPlayer {
 
     init() {
         this.emitEvents()
-        console.log(this.audioElement)
         if (this.audioElement.readyState > 0) {
             this.displayDuration()
             this.setSliderMax()
