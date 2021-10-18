@@ -172,6 +172,7 @@ class SplashAudioPlayer {
 
     /**
      * Update the time of the track and the position of the seek slider while playing
+     * @see playHandler
      */
     whilePlaying = () => {
         this.seekSlider.value = Math.floor(this.audioTrack.currentTime)
