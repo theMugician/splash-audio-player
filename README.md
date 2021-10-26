@@ -35,6 +35,22 @@ Use a unique class name or ID for your HTML ```<div>``` tag that wraps the ```<a
 </div>
 ```
 
+### Options
+
+You can add 3 option attributes native to the audio tag. By default they are all ```false```.
+
+```js
+const options = {
+    autoplay: true,
+    muted: true,
+    loop: true
+}
+
+window.addEventListener('load', (event) => {
+    new SplashAudioPlayer('.my-custom-audio-player', options)
+})
+```
+
 ## Customizing styles and extending functionality
 
 Most of the audio player elements are styled with CSS variables that can be easily changed at the top of the `splash-audio-player.css` file.
