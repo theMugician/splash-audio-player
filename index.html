@@ -7,6 +7,7 @@
 	<title>Splash Audio Player</title>
 	<meta name="description" content="Splash Audio Player | Vanilla javascript audio player">
 	<meta name="author" content="Greg Slonina | sevenoceans.agency">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="splash-audio-player.css">
 
 	<style>
@@ -59,7 +60,7 @@
 			muted: true,
 			loop: true
 		}
-		
+
 		window.addEventListener('load', (event) => {
 			new SplashAudioPlayer('.my-custom-audio-player', options)
 		})
