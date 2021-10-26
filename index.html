@@ -54,8 +54,14 @@
 	<script src="splash-audio-player.js"></script>
 
 	<script>
+		const options = {
+			autoplay: true,
+			muted: true,
+			loop: true
+		}
+		
 		window.addEventListener('load', (event) => {
-			new SplashAudioPlayer('.my-custom-audio-player')
+			new SplashAudioPlayer('.my-custom-audio-player', options)
 		})
 	</script>
 
