@@ -235,6 +235,9 @@
     margin-right: 20px;
     width: var(--volume-slider__width);
 }
+.is-mobile-device .splash-audio-player__volume-slider {
+    display: none;
+}
 .splash-audio-player__volume-slider::-webkit-slider-runnable-track {
     background: var(--range-slider-track__background-color);
 }

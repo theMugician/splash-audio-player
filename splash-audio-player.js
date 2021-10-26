@@ -58,18 +58,31 @@ class SplashAudioPlayer {
 		 * Access DOM element <audio> tag
 		 */        
 		this.audioTrack = this.audioPlayer.getElementsByTagName('audio')[0]
-
+		
 		/**
 		 * Add class 'splash-audio-player' to audio player
 		 * @see audioPlayer
 		 */   
 		this.audioPlayer.classList.add('splash-audio-player')
+		if( this.isMobileDevice ) this.audioPlayer.classList.add('is-mobile-device')
+
 
 		/**
 		 * Create HTML template of audio player
 		 * @see getTemplate
 		 */
 		this.audioPlayer.innerHTML = SplashAudioPlayer.getTemplate() + this.audioTrackHTML
+
+		/**
+		 * Detect mobile device
+		 */
+		const uaDataIsMobile = window.navigator.userAgentData && window.navigator.userAgentData.mobile
+
+		this.isMobileDevice = typeof uaDataIsMobile === 'boolean'
+			? uaDataIsMobile
+			: (/ipad|iphone|ipod|android/i.test(window.navigator.userAgent.toLowerCase())
+			|| (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1))
+			&& !window.MSStream
 
 		/**
 		 * Get DOM elements from audio player
