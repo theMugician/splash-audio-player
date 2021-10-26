@@ -1,3 +1,19 @@
+class Observer {
+	constructor() {
+		this.observers = []
+	}
+
+	subscribe(fn) {
+		this.observers.push(fn)
+	}
+
+	trigger() {
+		this.observers.forEach((observer) => {
+			observer()
+		})
+	}
+}
+
 class SplashAudioPlayer {
 	/**
 	 * Create an instance of SplashAudioPlayer
@@ -5,13 +21,6 @@ class SplashAudioPlayer {
 	 */
 	constructor(player, options) {
 		this.audioPlayer = typeof player === 'string' ? document.querySelector(player) : player
-
-		/**
-		 * Local State
-		 */       
-		this.playState = 'pause'
-		this.muteState = 'unmute'
-		this.raf = null
 
 		/**
 		 * Local State
@@ -87,6 +96,9 @@ class SplashAudioPlayer {
 		 * Change state of mute functionality based on options
 		 */
 		this.state.mute = this.options.muted ? 'mute' : 'unmute'
+		
+		this.muteObserver = new Observer()
+		this.muteObserver.subscribe(this.muteHandler)
 
 		/**
 		 * Initiate an instance of the audio player plugin
@@ -103,7 +115,9 @@ class SplashAudioPlayer {
 		})
 
 		this.muteButton.addEventListener('click', () => {
-			this.muteHandler()
+			this.state.mute = this.state.mute === 'unmute' ? 'mute' : 'unmute'
+			this.muteObserver.trigger()
+			// this.muteHandler()
 		})
 
 		this.seekSlider.addEventListener('input', (e) => {
@@ -116,7 +130,7 @@ class SplashAudioPlayer {
 		this.seekSlider.addEventListener('input', () => {
 			this.currentTimeContainer.textContent = this.calculateTime(this.seekSlider.value)
 			if(!this.audioTrack.paused) {
-				cancelAnimationFrame(this.raf)
+				cancelAnimationFrame(this.state.requestAnimationFrameWhilePlaying)
 			}
 		})
 	
@@ -152,20 +166,19 @@ class SplashAudioPlayer {
 	/** Implementation of the functionality of the audio player */
 
 	playHandler = () => {
-		this.playState = this.playState === 'pause' ? 'play' : 'pause'
-		if(this.playState === 'play') {
+		this.state.play = this.state.play === 'pause' ? 'play' : 'pause'
+		if(this.state.play === 'play') {
 			this.audioTrack.play()
 			requestAnimationFrame(this.whilePlaying)
 			this.playPauseButtonIcon.attributes.d.value = 'M0 0h6v24H0zM12 0h6v24h-6z'
 		} else {
 			this.audioTrack.pause()
-			cancelAnimationFrame(this.raf)
+			cancelAnimationFrame(this.state.requestAnimationFrameWhilePlaying)
 			this.playPauseButtonIcon.attributes.d.value = 'M18 12L0 24V0'
 		}
 	}
 
 	muteHandler = () => {
-		this.state.mute = this.state.mute === 'unmute' ? 'mute' : 'unmute'
 		if(this.state.mute === 'mute') {
 			this.audioTrack.muted = true
 			this.muteButtonIcon.attributes.d.value = 'M0 7.667v8h5.333L12 22.333V1L5.333 7.667'
@@ -217,10 +230,11 @@ class SplashAudioPlayer {
 		this.seekSlider.value = Math.floor(this.audioTrack.currentTime)
 		this.currentTimeContainer.textContent = this.calculateTime(this.seekSlider.value)
 		this.audioPlayer.style.setProperty('--seek-slider-before__width', `${this.seekSlider.value / this.seekSlider.max * 100}%`)
-		this.raf = requestAnimationFrame(this.whilePlaying)
+		this.state.requestAnimationFrameWhilePlaying = requestAnimationFrame(this.whilePlaying)
 	}
 
 	init() {
+		this.muteHandler()
 		this.emitEvents()
 		if (this.audioTrack.readyState > 0) {
 			this.displayDuration()
